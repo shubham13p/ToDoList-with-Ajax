@@ -1,0 +1,48 @@
+<% include partials/header %>
+
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+
+<!--new item to insert-->
+        <h1>New Item</h1>
+        <form action="/todos" method="POST" id="new-todo-form">
+            <div class="form-group">
+                <label for="new-item">Item Text</label>
+                <input id="new-item" type="text" name="todo[text]" class="form-control" placeholder="qwe">
+            </div>
+            <button class="btn btn-primary">Create Item</button>
+        </form>
+
+<!--to update item-->
+        <h1>To Do Items</h1>
+        <ul class="list-group" id="todo-list">
+            <% todos.forEach(function(todo){ %>
+
+            <li class="list-group-item">
+
+                <form class="edit-item-form" action="/todos/<%=todo._id%>" method="POST">
+                    <div class="form-group">
+                        <label for="<%=todo._id%>">Item Text</label>
+                        <input type="text" value="<%= todo.text %>" id="<%=todo._id%>" name="todo[text]" class="form-control">
+                    </div>
+                    <button class="btn btn-primary">Update Item</button>
+                </form>
+
+
+                <span class="lead">
+                    <%= todo.text %>
+                </span>
+                <div class="pull-right">
+                    <button class="btn btn-sm btn-warning edit-button">Edit</button>
+                    <form style="display: inline" method="POST" action="/todos/<%=todo._id%>" class="delete-item-form">
+                        <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                    </form>
+                </div>
+                <div class="clearfix"></div>
+            </li>
+            <% }); %>
+        </ul>
+    </div>
+</div>
+
+<% include partials/footer %>
